@@ -21,6 +21,8 @@ This performs the following validations:
 
 Mount a volume and specify the path to the XHTML file as the argument.
 
+When the argument is `-` then stdin is used instead of reading from a File.
+
 ```bash
 # Clone this repo and run:
 docker run --volume $(pwd):/data --rm -it $(docker build -q .) /data/test/resources/fail-duplicate.xhtml
@@ -28,6 +30,9 @@ docker run --volume $(pwd):/data --rm -it $(docker build -q .) /data/test/resour
 docker run --volume $(pwd):/data --rm -it $(docker build -q .) /data/test/resources/pass.xhtml
 
 docker run --volume $(pwd):/data --rm -it $(docker build -q .) /data/test/resources/fail-link-to-duplicate-id.xhtml link-to-duplicate-id
+
+# Verify that the magic stdin file ('-') works
+cat ./test/resources/fail-duplicate.xhtml | docker run --rm -i $(docker build -q .) -
 ```
 
 An additional optional argument specifies which test to run:
