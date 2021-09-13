@@ -14,10 +14,16 @@ public class Main {
         if (args.length == 0) {
             throw new RuntimeException("Requires 2 arguments: the path to a file to validate and which checks to run ('all-checks', 'duplicate-id', 'broken-link')");
         }
-        File inputFile = new File(args[0]);
+        InputStream input;
+        if ("-".equals(args[0])) {
+            // Read from stdin
+            input = System.in;
+        } else {
+            File inputFile = new File(args[0]);
+            input = new FileInputStream(inputFile);
+        }
         String[] desiredChecks = args.length == 1 ? new String[]{"all"} : Arrays.copyOfRange(args, 1, args.length);
-        FileInputStream fileInputStream = new FileInputStream(inputFile);
-        runChecks(fileInputStream, desiredChecks);
+        runChecks(input, desiredChecks);
     }
 
     public static void runChecks(InputStream inputStream, String[] desiredChecks) throws Throwable {
