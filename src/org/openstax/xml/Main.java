@@ -37,7 +37,7 @@ public class Main {
         boolean errorsFound = false;
 
         for (String check: desiredChecks) {
-            System.err.println(String.format("Running %s", check));
+            // System.err.println(String.format("Running %s", check));
             switch (check) {
                 case "all":
                     errorsFound |= visitor.linksToDuplicateIds();
