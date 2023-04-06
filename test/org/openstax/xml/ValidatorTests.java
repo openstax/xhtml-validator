@@ -1,10 +1,9 @@
 package org.openstax.xml;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 import java.io.InputStream;
-import javax.xml.parsers.SAXParserFactory;
 import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 import org.junit.jupiter.api.Test;
 
 class ValidatorTests {
