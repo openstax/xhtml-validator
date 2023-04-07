@@ -17,16 +17,16 @@ import javax.xml.parsers.SAXParserFactory;
 
 public class Main {
 
-    static String XHTML_FILE = "xhtml";
-
     public static void main(String[] args) throws Throwable {
 
-        if (args.length == 0) {
+        if (args.length < 2) {
             throw new RuntimeException(
                     "Requires 2 arguments: the path to a file to validate and which checks to run ('all-checks', 'duplicate-id', 'broken-link')");
         }
+        String pattern = args[1];
+        System.out.println("Validating files matching " + pattern);
         String[] desiredChecks =
-                args.length == 1 ? new String[] {"all"} : Arrays.copyOfRange(args, 1, args.length);
+                args.length == 2 ? new String[] {"all"} : Arrays.copyOfRange(args, 2, args.length);
         Set<String> inputs;
         InputStream input;
         if ("-".equals(args[0])) {
@@ -35,7 +35,7 @@ public class Main {
             runChecks(input, desiredChecks);
         } else {
             System.out.println("Validating " + args[0]);
-            inputs = getResources(args[0], XHTML_FILE);
+            inputs = getResources(args[0], pattern);
             System.out.println("Found " + inputs.size() + " files");
             for (String file : inputs){
                 System.out.println("Validating " + file);
