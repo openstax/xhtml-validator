@@ -21,8 +21,9 @@ public class Main {
 
         if (args.length < 2) {
             throw new RuntimeException(
-                    "Requires 2 arguments: the path to a file to validate and which checks to run ('all-checks', 'duplicate-id', 'broken-link')");
+                    "Requires 3 arguments: the path to a file to validate, the pattern of the filenames and which checks to run ('all-checks', 'duplicate-id', 'broken-link')");
         }
+        // Retrieve the pattern from the arguments
         String pattern = args[1];
         System.out.println("Validating files matching " + pattern);
         String[] desiredChecks =
@@ -34,10 +35,12 @@ public class Main {
             input = System.in;
             runChecks(input, desiredChecks);
         } else {
+            // The path has been provided
             System.out.println("Validating " + args[0]);
             inputs = getResources(args[0], pattern);
             System.out.println("Found " + inputs.size() + " files");
             for (String file : inputs){
+                // For each file, run the checks
                 System.out.println("Validating " + file);
                 runChecks(file, desiredChecks);
             }
@@ -45,6 +48,7 @@ public class Main {
     }
 
     public static Set<String> getResources(String path, String pattern) throws Throwable {
+        // Returns a file if a single file is provided, otherwise returns all files in the directory that match the pattern
         File file = new File(path);
         if (!file.exists())
             return Collections.emptySet();
