@@ -80,6 +80,6 @@ class RunnerTests {
     void failWhenInvalidCheckIsProvided() {
         InputStream inputFileStream = getClass().getClassLoader().getResourceAsStream("pass.xhtml");
         System.setIn(inputFileStream);
-        assertThrows(RuntimeException.class, () -> Main.main(new String[]{"-", "xhtml", "invalid-check"}));
+        assertThrows(RuntimeException.class, () -> Main.main(new String[]{"-", "*.xhtml", "invalid-check"}));
     }
 }

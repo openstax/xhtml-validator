@@ -53,7 +53,7 @@ public class Main {
         else if (file.isFile())
             return new HashSet<>(Arrays.asList(path));
         else {
-            return Files.find(Paths.get(path),  Integer.MAX_VALUE, (p, basicFileAttributes) -> p.toFile().getName().endsWith(pattern))
+            return Files.find(Paths.get(path),  Integer.MAX_VALUE, (p, basicFileAttributes) -> p.toFile().getName().matches(pattern))
             .map(f->f.toAbsolutePath().toString()).collect(Collectors.toSet());
         }
     }
