@@ -22,7 +22,7 @@ public class Main {
                     "Requires 3 arguments: the path to a file to validate, the pattern of the filenames and which checks to run ('all-checks', 'duplicate-id', 'broken-link')");
         }
         // Retrieve the pattern from the arguments
-        String pattern = args[1];
+        String pattern = args[1].replaceAll("\\*", ".\\*");
         System.out.println("Validating files matching " + pattern);
         String[] desiredChecks =
                 args.length == 2 ? new String[] {"all"} : Arrays.copyOfRange(args, 2, args.length);
@@ -53,7 +53,10 @@ public class Main {
         else if (file.isFile())
             return new HashSet<>(Arrays.asList(path));
         else {
-            return Files.find(Paths.get(path),  Integer.MAX_VALUE, (p, basicFileAttributes) -> p.toFile().getName().matches(pattern))
+            return Files.find(Paths.get(path),  Integer.MAX_VALUE, (p, basicFileAttributes) -> {
+                System.out.println(p.toFile().getName());
+                return p.toFile().isFile() && p.toFile().getName().matches(pattern);
+            })
             .map(f->f.toAbsolutePath().toString()).collect(Collectors.toSet());
         }
     }
