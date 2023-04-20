@@ -3,9 +3,8 @@ package org.openstax.xml;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
-
+import java.util.Set;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -19,7 +18,6 @@ public class XMLVisitor extends DefaultHandler {
     @Override
     public void startElement(String uri,
     String localName, String qName, Attributes attributes) throws SAXException {
-
         String id = attributes.getValue("id");
         String href = attributes.getValue("href");
 
@@ -50,15 +48,11 @@ public class XMLVisitor extends DefaultHandler {
     }
 
     public boolean brokenLinks() {
-        int total = 0;
-        for (String s : linksToCheck) {
-            if (!ids.contains(s)) {
-                total++;
-                System.err.println(String.format("Link points to nowhere: href='#%s'", s));
-            }
-        }
-        if (total != 0) {
-            System.err.println(String.format("Links that point to nowhere: %d", total));
+        Set<String> tempLinksToCheck = new HashSet<String>(this.linksToCheck);
+        tempLinksToCheck.removeAll(this.ids);
+        tempLinksToCheck.forEach(s -> System.err.println(String.format("Link points to nowhere: href='#%s'", s)));
+        if (!tempLinksToCheck.isEmpty()) {
+            System.err.println(String.format("Links that point to nowhere: %d", tempLinksToCheck.size()));
             return true;
         }
         return false;

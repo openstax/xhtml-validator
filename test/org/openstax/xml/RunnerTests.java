@@ -1,14 +1,12 @@
 package org.openstax.xml;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-import java.io.PrintStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
-import java.io.IOException;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.BeforeEach;
+import java.io.PrintStream;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.xml.sax.SAXParseException;
 
 class RunnerTests {
@@ -82,6 +80,6 @@ class RunnerTests {
     void failWhenInvalidCheckIsProvided() {
         InputStream inputFileStream = getClass().getClassLoader().getResourceAsStream("pass.xhtml");
         System.setIn(inputFileStream);
-        assertThrows(RuntimeException.class, () -> Main.main(new String[]{"-", "invalid-check"}));
+        assertThrows(RuntimeException.class, () -> Main.main(new String[]{"-", "*.xhtml", "invalid-check"}));
     }
 }

@@ -2,7 +2,7 @@ version: 2.0
 jobs:
   unit-tests:
     docker:
-      - image: circleci/openjdk:14-jdk-buster
+      - image: cimg/openjdk:14.0.2
 
     steps:
       - checkout
